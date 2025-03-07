@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "set \"VITE_CJS_TRACE=true\" && vite build",

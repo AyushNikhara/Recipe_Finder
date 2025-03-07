@@ -64,7 +64,7 @@ function App() {
         params.append('ratingFilter', ratingFilter.toString());
       }
 
-      const response = await axios.get(`http://localhost:5000/api/recipes?${params.toString()}`);
+      const response = await axios.get(`https://recipe-finder-1-iwk6.onrender.com/api/recipes?${params.toString()}`);
       setRecipes(response.data);
     } catch (err) {
       setError('Failed to fetch recipes. Please try again.');
@@ -100,7 +100,7 @@ function App() {
   const handleAddReview = async (recipeId: string, review: Omit<Review, 'id' | 'userId' | 'createdAt'>) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/recipes/${recipeId}/reviews`,
+        `https://recipe-finder-1-iwk6.onrender.com/api/recipes/${recipeId}/reviews`,
         review
       );
 

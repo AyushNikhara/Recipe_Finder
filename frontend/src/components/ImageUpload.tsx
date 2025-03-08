@@ -108,10 +108,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Upload Ingredient Image</h3>
-        <p className="text-sm text-gray-500">Please upload one ingredient image at a time for best results</p>
+    <div className="space-y-1">
+          <h3 className="text-lg font-semibold">Upload Food Image</h3>
+          <p className="text-sm text-gray-500">Please upload one ingredient image at a time for best results</p>
         <div className="flex gap-2">
           <label className="cursor-pointer">
             <input

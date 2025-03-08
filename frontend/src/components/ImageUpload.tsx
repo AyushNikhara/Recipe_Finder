@@ -38,7 +38,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
 
     try {
       const reader = new FileReader();
-      
+
       const readerPromise = new Promise<string>((resolve, reject) => {
         reader.onload = () => {
           const base64Image = reader.result?.toString().split(',')[1];
@@ -85,7 +85,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
       setImagePreview(null);
     } catch (err) {
       let errorMessage = 'Failed to process the image';
-      
+
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401) {
           errorMessage = 'Invalid API key. Please check your API keys.';
@@ -110,7 +110,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-      <div className="space-y-1">
+        <div className="space-y-1">
           <h3 className="text-lg font-semibold">Upload Ingredient Image</h3>
           <p className="text-sm text-gray-500">Please upload one ingredient image at a time for best results</p>
         </div>
@@ -145,16 +145,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
       </div>
 
       {imagePreview && (
-  <>
-    <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
-      <img
-        src={imagePreview}
-        alt="Preview"
-        className="h-full w-full object-cover"
-      />
-    </div>
-  </>
-)}
+        <>
+          <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </>
+      )}
 
 
       {error && (

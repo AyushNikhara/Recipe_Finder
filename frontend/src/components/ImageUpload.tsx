@@ -144,16 +144,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
         </div>
       </div>
 
-      {imagePreview && (
-        <>
-          <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </>
+      {imagePreview !== null && (
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
+          <img
+            src={imagePreview}
+            alt="Preview"
+            className="h-full w-full object-cover"
+          />
+        </div>
       )}
 
 

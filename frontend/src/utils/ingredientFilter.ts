@@ -1,96 +1,44 @@
-import { z } from 'zod';
-import { WordTokenizer } from 'natural';
-import { validIngredients } from './validIngredients';
+import { ingredientsData, flattenedExcludeWords } from './ingredients';
 
-const tokenizer = new WordTokenizer();
+// Create a Map of normalized ingredient names to their original form
+const ingredientMap = new Map(
+  Object.values(ingredientsData)
+    .flat()
+    .map(ingredient => [ingredient.toLowerCase(), ingredient])
+);
 
-// Schema for validating ingredients
-const ingredientSchema = z.string().min(2).transform(str => str.toLowerCase().trim());
-
-// Common words to filter out
-const commonWords = new Set([
-  'the', 'and', 'or', 'with', 'in', 'on', 'at', 'to', 'for', 'of', 'a', 'an',
-  'some', 'few', 'many', 'much', 'this', 'that', 'these', 'those', 'image',
-  'picture', 'photo', 'shows', 'showing', 'contains', 'containing', 'dish',
-  'food', 'meal', 'recipe', 'ingredients', 'cooking', 'cooked', 'prepared',
-  'made', 'served', 'plate', 'bowl', 'cup', 'pieces', 'slices', 'chunks'
-]);
-
-// Common measurements to filter out
-const measurements = new Set([
-  'cup', 'cups', 'tablespoon', 'tablespoons', 'tbsp', 'teaspoon', 'teaspoons',
-  'tsp', 'gram', 'grams', 'g', 'kilogram', 'kg', 'pound', 'pounds', 'lb',
-  'lbs', 'ounce', 'ounces', 'oz', 'ml', 'liter', 'liters', 'l', 'pinch',
-  'dash', 'handful', 'piece', 'pieces', 'slice', 'slices'
-]);
-
-// Regex patterns
-const numberPattern = /^\d+(\.\d+)?$/;
-const quantityPattern = /^(\d+\/\d+|\d+(\.\d+)?)(oz|g|kg|lb|lbs|cup|tbsp|tsp|ml|l)s?$/i;
-const cleanTextPattern = /[^\w\s-]/g;
-
-// Clean and normalize text
-function cleanText(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(cleanTextPattern, ' ')
-    .trim();
-}
-
-// Check if a word is likely an ingredient
-function isLikelyIngredient(word: string): boolean {
-  const cleaned = cleanText(word);
-  return validIngredients.includes(cleaned as any);
-}
-
-// Process text through NLP pipeline
-function processTextNLP(text: string): string[] {
-  const tokens = tokenizer.tokenize(text);
-  if (!tokens) return [];
+export function filterIngredients(text: string): string[] {
+  // Convert text to lowercase for consistent matching
+  const lowercaseText = text.toLowerCase();
   
-  return tokens.filter(token => {
-    const cleaned = cleanText(token);
-    return (
-      cleaned.length > 1 &&
-      !commonWords.has(cleaned) &&
-      !measurements.has(cleaned) &&
-      isLikelyIngredient(cleaned)
-    );
-  });
-}
+  // Remove punctuation and split into words
+  const words = lowercaseText
+    .replace(/[^\w\s-]/g, ' ')
+    .split(/\s+/)
+    .filter(word => word.length > 1);
 
-export function filterIngredients(rawText: string | string[]): string[] {
-  const text = Array.isArray(rawText) ? rawText.join(' ') : rawText;
-  const filteredSet = new Set<string>();
+  // Create pairs of consecutive words for compound ingredients
+  const wordPairs = words.map((word, i) => 
+    i < words.length - 1 ? `${word} ${words[i + 1]}` : word
+  );
 
-  // First pass: NLP processing
-  const nlpResults = processTextNLP(text);
+  // Combine single words and pairs for checking
+  const potentialIngredients = [...words, ...wordPairs];
 
-  // Second pass: Validation and cleaning
-  for (const word of nlpResults) {
-    // Skip numbers and measurements
-    if (
-      numberPattern.test(word) ||
-      quantityPattern.test(word) ||
-      commonWords.has(word) ||
-      measurements.has(word)
-    ) {
-      continue;
-    }
+  // Filter and normalize ingredients
+  const foundIngredients = new Set<string>();
 
-    try {
-      // Validate and clean the ingredient
-      const validIngredient = ingredientSchema.parse(word);
-      
-      // Final check against whitelist
-      if (validIngredient && validIngredients.includes(validIngredient as any)) {
-        filteredSet.add(validIngredient);
-      }
-    } catch {
-      // Skip invalid ingredients
-      continue;
+  for (const word of potentialIngredients) {
+    // Skip common words
+    if (flattenedExcludeWords.includes(word)) continue;
+
+    // Check if it's a known ingredient
+    const normalizedWord = word.toLowerCase();
+    if (ingredientMap.has(normalizedWord)) {
+      foundIngredients.add(ingredientMap.get(normalizedWord)!);
     }
   }
 
-  return Array.from(filteredSet);
+  // Convert to array, remove duplicates, and sort
+  return Array.from(foundIngredients).sort();
 }

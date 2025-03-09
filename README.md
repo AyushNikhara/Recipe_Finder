@@ -14,7 +14,7 @@ A modern web application that helps you discover delicious recipes through text 
 
 ## Live Demo
 - Frontend: https://recipe-finder-three-nu.vercel.app/
-- Backend API: (https://recipe-finder-1-iwk6.onrender.com)
+- Backend API: https://recipe-finder-1-iwk6.onrender.com
 
 ## Features ✨
 - 📸 Image-to-text conversion using AI (Microsoft Git-Base model)

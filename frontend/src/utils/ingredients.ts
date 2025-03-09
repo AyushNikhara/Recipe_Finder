@@ -8,7 +8,7 @@ export const ingredientsData = {
         "Kohlrabi", "Microgreens", "Seaweed", "Sprouts", "Bell Pepper", "Red Onion"
     ],
     fruits: [
-        "Apple", "Banana", "Orange", "Grapes", "Mango", "Strawberry", "Pineapple",
+        "Apple", "Apples","Banana", "Banana" , "Orange", "Grapes", "Mango", "Strawberry", "Pineapple",
         "Watermelon", "Papaya", "Kiwi", "Blueberry", "Raspberry", "Cherry", "Pomegranate",
         "Peach", "Pear", "Plum", "Fig", "Coconut", "Avocado", "Blackberry", "Cranberry",
         "Guava", "Jackfruit", "Lychee", "Nectarine", "Persimmon", "Starfruit", "Tamarind",

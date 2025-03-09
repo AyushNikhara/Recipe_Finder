@@ -10,6 +10,9 @@ A modern web application that helps you discover delicious recipes through text 
 ![image](https://github.com/user-attachments/assets/1dac1af0-b24a-4d8e-820f-cbbeb746ed76)
 ![image](https://github.com/user-attachments/assets/bd268d46-dc91-40a7-8c8d-f5e90f5878e4)
 ![image](https://github.com/user-attachments/assets/16fac5a2-bca7-4a37-95ee-361ca8b57b91)
+![image](https://github.com/user-attachments/assets/7be61f76-e3ad-4a69-97f3-31476aa1abd8)
+![image](https://github.com/user-attachments/assets/cabd2757-ec5d-452a-9d22-40fac69f1042)
+![image](https://github.com/user-attachments/assets/9e3a0628-9008-4acd-afa0-18f78f117626)
 
 
 ## Live Demo

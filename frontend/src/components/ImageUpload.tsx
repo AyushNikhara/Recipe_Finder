@@ -92,7 +92,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onIngredientsExtracted }) => 
         } else if (err.code === 'ECONNABORTED') {
           errorMessage = 'Request timed out. Please try again.';
         } else if (!err.response) {
-          errorMessage = 'Network error. Please check your internet connection.';
+          errorMessage = 'Network error. Refresh The Website.';
         } else {
           errorMessage = err.response.data?.error || 'API error occurred';
         }
